@@ -8,6 +8,9 @@ namespace Assets.Scripts
 {
     public class BeatFlagController
     {
+        /// <summary>
+        /// Contains whole batch of beat flags with timePoint and armAround
+        /// </summary>
         public List<BeatFlagItem> BeatFlags { get; set; }
         public BeatFlagController()
         {
@@ -17,6 +20,11 @@ namespace Assets.Scripts
             };
         }
 
+        /// <summary>
+        /// By certain time point (seconds), returns respective flag index
+        /// </summary>
+        /// <param name="timeFlag"></param>
+        /// <returns></returns>
         public int GetFlagIndex(float timeFlag)
         {
             for (int i = 0; i < BeatFlags.Count; i++)
@@ -28,11 +36,23 @@ namespace Assets.Scripts
             return -1;
         }
 
+        /// <summary>
+        /// Checks whether timeFlag for time point (seconds) exists or not.
+        /// Refers to GetFlagIndex(float).
+        /// </summary>
+        /// <param name="timeFlag"></param>
+        /// <returns></returns>
         public bool IsFlagExists(float timeFlag)
         {
             return GetFlagIndex(timeFlag) != -1;
         }
 
+        /// <summary>
+        /// Sets flag, including certain time point (seconds), as taken.
+        /// Refers to GetFlagIndex(float).
+        /// </summary>
+        /// <param name="timeFlag"></param>
+        /// <returns></returns>
         public bool SetFlagTaken(float timeFlag)
         {
             int flagIndex = GetFlagIndex(timeFlag);
@@ -44,6 +64,12 @@ namespace Assets.Scripts
             return false;
         }
 
+        /// <summary>
+        /// Checks whether or not certain time point (seconds) is taken.
+        /// Refers to GetFlagIndex(float).
+        /// </summary>
+        /// <param name="timeFlag"></param>
+        /// <returns></returns>
         public bool IsFlagTaken(float timeFlag)
         {
             int flagIndex = GetFlagIndex(timeFlag);
@@ -52,6 +78,11 @@ namespace Assets.Scripts
             return BeatFlags[flagIndex].IsTaken;
         }
 
+        /// <summary>
+        /// Seconds left to take matching flag
+        /// </summary>
+        /// <param name="timeFlag"></param>
+        /// <returns></returns>
         public float TimeLeftThisSpan(float timeFlag)
         {
             float timeLeft = -1;
@@ -69,6 +100,10 @@ namespace Assets.Scripts
             return timeLeft;
         }
 
+        /// <summary>
+        /// Checks whether or not all flags have been taken
+        /// </summary>
+        /// <returns></returns>
         public bool IsWinAchieved()
         {
             foreach (BeatFlagItem flag in BeatFlags)
@@ -77,6 +112,11 @@ namespace Assets.Scripts
             return true;
         }
 
+        /// <summary>
+        /// Checks whether or not some flag has not been taken, and timepoint already passed it
+        /// </summary>
+        /// <param name="timePoint"></param>
+        /// <returns></returns>
         public bool IsLoseAchieved(float timePoint)
         {
             foreach (BeatFlagItem flag in BeatFlags)
