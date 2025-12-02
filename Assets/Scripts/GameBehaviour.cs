@@ -98,6 +98,7 @@ public class GameBehaviour : MonoBehaviour
                 {
                     isGameOn = true;
                     Debug.Log("STARTED");
+                    PlayMusicLevel1();
                 }
                 break;
         }
@@ -129,4 +130,22 @@ public class GameBehaviour : MonoBehaviour
 
         return false;
     }
+
+    #region TO SEPARATE CLASS
+    void PlayMusicLevel1()
+    {
+        string playerName = "SoundPlayer";
+        GameObject player = GameObject.Find(playerName);
+        if (player != null)
+        {
+            AudioSource src = player.GetComponent<AudioSource>();
+            if (src != null)
+                src.Play();
+            else
+                Debug.Log($"Could not get source of \"{playerName}\"");
+        }
+        else
+            Debug.Log($"Could not get object \"{playerName}\"");
+    }
+    #endregion
 }
