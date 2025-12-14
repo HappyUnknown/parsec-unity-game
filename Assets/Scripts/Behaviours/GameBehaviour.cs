@@ -26,6 +26,7 @@ public class GameBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
+    // Update is called once per frame
     void Update()
     {
         // RELENTLESS ACTIONS
@@ -51,14 +52,11 @@ public class GameBehaviour : MonoBehaviour
                     return;
                 }
 
-                if (beatFlagCtrl.IsFlagExists(gameLevelTime))
+                if (beatFlagCtrl.IsUntakenFlagExists(gameLevelTime))
                 {
-                    if (!beatFlagCtrl.IsFlagTaken(gameLevelTime))
-                    {
-                        Debug.Log($"SPAN: {gameLevelTime}");
-                        SetUIText("MidText", "TAP!");
-                        SetUIText("GlobalTime", beatFlagCtrl.TimeLeftThisSpan(gameLevelTime).ToString("F2"));
-                    }
+                    Debug.Log($"SPAN: {gameLevelTime}");
+                    SetUIText("MidText", "TAP!");
+                    SetUIText("GlobalTime", beatFlagCtrl.TimeLeftThisSpan(gameLevelTime).ToString("F2"));
                 }
                 else
                 {
@@ -68,13 +66,10 @@ public class GameBehaviour : MonoBehaviour
 
                 if (Keyboard.current.ctrlKey.isPressed)
                 {
-                    if (beatFlagCtrl.IsFlagExists(gameLevelTime))
+                    if (beatFlagCtrl.IsUntakenFlagExists(gameLevelTime))
                     {
-                        if (!beatFlagCtrl.IsFlagTaken(gameLevelTime))
-                        {
-                            beatFlagCtrl.SetFlagTaken(gameLevelTime);
-                            Debug.Log($"FLAG: {gameLevelTime}");
-                        }
+                        beatFlagCtrl.SetFlagTaken(gameLevelTime);
+                        Debug.Log($"FLAG: {gameLevelTime}");
                     }
                 }
 
@@ -105,9 +100,7 @@ public class GameBehaviour : MonoBehaviour
                 break;
         }
 
-
     }
-
     bool SetUIText(string textCntnName, string val)
     {
         // --- ¬»œ–¿¬À≈ÕÕﬂ “≈ —“” (GlobalTime) ---

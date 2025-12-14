@@ -48,6 +48,17 @@ namespace Assets.Scripts
         }
 
         /// <summary>
+        /// Checks for available existing flags at the timepoint.
+        /// Enables to hide current obtained flag immediately.
+        /// </summary>
+        /// <param name="timeFlag"></param>
+        /// <returns></returns>
+        public bool IsUntakenFlagExists(float timeFlag)
+        {
+            return IsFlagExists(timeFlag) && !IsFlagTaken(timeFlag);
+        }
+
+        /// <summary>
         /// Sets flag, including certain time point (seconds), as taken.
         /// Refers to GetFlagIndex(float).
         /// </summary>
