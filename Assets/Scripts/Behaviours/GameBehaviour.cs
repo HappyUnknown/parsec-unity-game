@@ -12,6 +12,7 @@ public class GameBehaviour : MonoBehaviour
     float gameLevelTime;
 
     BeatFlagController beatFlagCtrl;
+    GameObject pnlAfterGame;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,9 +24,14 @@ public class GameBehaviour : MonoBehaviour
         gameLevelTime = 0;
 
         SetUIText("MidText", "Tap to start");
+
+        pnlAfterGame = GameObject.Find("PanelAfterGame");
+        if (pnlAfterGame != null)
+            if (pnlAfterGame.gameObject.activeSelf)
+                pnlAfterGame.gameObject.SetActive(false);
+
     }
 
-    // Update is called once per frame
     // Update is called once per frame
     void Update()
     {
@@ -74,19 +80,20 @@ public class GameBehaviour : MonoBehaviour
                 }
 
                 if (beatFlagCtrl.IsWinAchieved())
-                {
                     SetUIText("MidText", "WIN");
-                    SetUIText("GlobalTime", string.Empty); // Simplication can lead to delayed timer vanish
-
-                    GameObject.Find("MainCamera").gameObject.transform.parent = GameObject.Find("Main").gameObject.transform;
-                }
                 else if (beatFlagCtrl.IsLoseAchieved(gameLevelTime))
-                {
                     SetUIText("MidText", "LOSE");
-                    SetUIText("GlobalTime", string.Empty); // Simplication can lead to delayed timer vanish
 
+                if (beatFlagCtrl.IsGameEnded(gameLevelTime))
+                {
+                    SetUIText("GlobalTime", string.Empty); // Simplication can lead to delayed timer vanish
                     GameObject.Find("MainCamera").gameObject.transform.parent = GameObject.Find("Main").gameObject.transform;
+
+                    if (pnlAfterGame != null)
+                        if (!pnlAfterGame.gameObject.activeSelf)
+                            pnlAfterGame.gameObject.SetActive(true);
                 }
+
                 break;
 
             case false:

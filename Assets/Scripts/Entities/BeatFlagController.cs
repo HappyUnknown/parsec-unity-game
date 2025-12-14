@@ -135,5 +135,15 @@ namespace Assets.Scripts
                     return true;
             return false;
         }
+
+        /// <summary>
+        /// IsWinAchieved() or IsLoseAchieved()
+        /// </summary>
+        /// <param name="timePoint"></param>
+        /// <returns>Is it an endgame?</returns>
+        public bool IsGameEnded(float timePoint)
+        {
+            return IsWinAchieved() || IsLoseAchieved(timePoint);
+        }
     }
 }
