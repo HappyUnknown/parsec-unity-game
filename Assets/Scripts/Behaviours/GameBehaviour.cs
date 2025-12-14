@@ -81,17 +81,19 @@ public class GameBehaviour : MonoBehaviour
                 if (beatFlagCtrl.IsWinAchieved())
                 {
                     SetUIText("MidText", "WIN");
+                    SetUIText("GlobalTime", string.Empty); // Simplication can lead to delayed timer vanish
 
                     GameObject.Find("MainCamera").gameObject.transform.parent = GameObject.Find("Main").gameObject.transform;
                 }
-
-                if (beatFlagCtrl.IsLoseAchieved(gameLevelTime))
+                else if (beatFlagCtrl.IsLoseAchieved(gameLevelTime))
                 {
                     SetUIText("MidText", "LOSE");
+                    SetUIText("GlobalTime", string.Empty); // Simplication can lead to delayed timer vanish
+
                     GameObject.Find("MainCamera").gameObject.transform.parent = GameObject.Find("Main").gameObject.transform;
                 }
-
                 break;
+
             case false:
             default:
                 if (Keyboard.current.enterKey.isPressed)
