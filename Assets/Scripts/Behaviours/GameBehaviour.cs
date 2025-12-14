@@ -5,6 +5,13 @@ using UnityEngine.InputSystem;
 
 public class GameBehaviour : MonoBehaviour
 {
+    const string AFTERGAME_MENU_NAME = "AfterGameMenu";
+    const string MIDTEXT_LABEL_NAME = "MidText";
+    const string GLOBALTIME_LABEL_NAME = "GlobalTime";
+    const string ROCKET_OBJ_NAME = "Rocket";
+    const string MAINCAMERA_NAME = "MainCamera";
+    const string MAINCONTAINER_NAME = "Main";
+    const string SOUNDPLAYER_NAME = "SoundPlayer";
     const float FLIGHT_SPEED = .1f;
 
     bool isGameOn;
@@ -23,9 +30,9 @@ public class GameBehaviour : MonoBehaviour
         gameSessionTime = 0;
         gameLevelTime = 0;
 
-        SetUIText("MidText", "Tap to start");
+        SetUIText(MIDTEXT_LABEL_NAME, "Tap to start");
 
-        pnlAfterGame = GameObject.Find("PanelAfterGame");
+        pnlAfterGame = GameObject.Find(AFTERGAME_MENU_NAME);
         if (pnlAfterGame != null)
             if (pnlAfterGame.gameObject.activeSelf)
                 pnlAfterGame.gameObject.SetActive(false);
@@ -42,7 +49,7 @@ public class GameBehaviour : MonoBehaviour
         switch (isGameOn)
         {
             case true:
-                GameObject rocket = GameObject.Find("Rocket");
+                GameObject rocket = GameObject.Find(ROCKET_OBJ_NAME);
 
                 if (rocket != null)
                 {
@@ -51,6 +58,43 @@ public class GameBehaviour : MonoBehaviour
                     Vector3 v = rocket.transform.position;
                     v.y = v.y + FLIGHT_SPEED;
                     rocket.transform.position = v;
+
+                    if (beatFlagCtrl.IsUntakenFlagExists(gameLevelTime))
+                    {
+                        Debug.Log($"SPAN: {gameLevelTime}");
+                        SetUIText(MIDTEXT_LABEL_NAME, "TAP!");
+                        SetUIText(GLOBALTIME_LABEL_NAME, beatFlagCtrl.TimeLeftThisSpan(gameLevelTime).ToString("F2"));
+
+                        if (Keyboard.current.ctrlKey.isPressed)
+                        {
+                            if (beatFlagCtrl.IsUntakenFlagExists(gameLevelTime))
+                            {
+                                beatFlagCtrl.SetFlagTaken(gameLevelTime);
+                                Debug.Log($"FLAG: {gameLevelTime}");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        SetUIText(MIDTEXT_LABEL_NAME, string.Empty);
+                        SetUIText(GLOBALTIME_LABEL_NAME, string.Empty);
+                    }
+
+
+                    if (beatFlagCtrl.IsWinAchieved())
+                        SetUIText(MIDTEXT_LABEL_NAME, "WIN");
+                    else if (beatFlagCtrl.IsLoseAchieved(gameLevelTime))
+                        SetUIText(MIDTEXT_LABEL_NAME, "LOSE");
+
+                    if (beatFlagCtrl.IsGameEnded(gameLevelTime))
+                    {
+                        SetUIText(GLOBALTIME_LABEL_NAME, string.Empty); // Simplication can lead to delayed timer vanish
+                        GameObject.Find(MAINCAMERA_NAME).gameObject.transform.parent = GameObject.Find(MAINCONTAINER_NAME).gameObject.transform;
+
+                        if (pnlAfterGame != null)
+                            if (!pnlAfterGame.gameObject.activeSelf)
+                                pnlAfterGame.gameObject.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -58,41 +102,6 @@ public class GameBehaviour : MonoBehaviour
                     return;
                 }
 
-                if (beatFlagCtrl.IsUntakenFlagExists(gameLevelTime))
-                {
-                    Debug.Log($"SPAN: {gameLevelTime}");
-                    SetUIText("MidText", "TAP!");
-                    SetUIText("GlobalTime", beatFlagCtrl.TimeLeftThisSpan(gameLevelTime).ToString("F2"));
-                }
-                else
-                {
-                    SetUIText("MidText", string.Empty);
-                    SetUIText("GlobalTime", string.Empty);
-                }
-
-                if (Keyboard.current.ctrlKey.isPressed)
-                {
-                    if (beatFlagCtrl.IsUntakenFlagExists(gameLevelTime))
-                    {
-                        beatFlagCtrl.SetFlagTaken(gameLevelTime);
-                        Debug.Log($"FLAG: {gameLevelTime}");
-                    }
-                }
-
-                if (beatFlagCtrl.IsWinAchieved())
-                    SetUIText("MidText", "WIN");
-                else if (beatFlagCtrl.IsLoseAchieved(gameLevelTime))
-                    SetUIText("MidText", "LOSE");
-
-                if (beatFlagCtrl.IsGameEnded(gameLevelTime))
-                {
-                    SetUIText("GlobalTime", string.Empty); // Simplication can lead to delayed timer vanish
-                    GameObject.Find("MainCamera").gameObject.transform.parent = GameObject.Find("Main").gameObject.transform;
-
-                    if (pnlAfterGame != null)
-                        if (!pnlAfterGame.gameObject.activeSelf)
-                            pnlAfterGame.gameObject.SetActive(true);
-                }
 
                 break;
 
@@ -136,18 +145,17 @@ public class GameBehaviour : MonoBehaviour
     #region TO SEPARATE CLASS
     void PlayMusicLevel1()
     {
-        string playerName = "SoundPlayer";
-        GameObject player = GameObject.Find(playerName);
+        GameObject player = GameObject.Find(SOUNDPLAYER_NAME);
         if (player != null)
         {
             AudioSource src = player.GetComponent<AudioSource>();
             if (src != null)
                 src.Play();
             else
-                Debug.Log($"Could not get source of \"{playerName}\"");
+                Debug.Log($"Could not get source of \"{SOUNDPLAYER_NAME}\"");
         }
         else
-            Debug.Log($"Could not get object \"{playerName}\"");
+            Debug.Log($"Could not get object \"{SOUNDPLAYER_NAME}\"");
     }
     #endregion
 }
