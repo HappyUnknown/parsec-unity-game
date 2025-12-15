@@ -21,21 +21,31 @@ public class GameBehaviour : MonoBehaviour
     BeatFlagController beatFlagCtrl;
     GameObject pnlEndgame;
 
+    public static GameBehaviour Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+            Destroy(gameObject);
+        else
+            Instance = this;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        isGameOn = false;
-        beatFlagCtrl = new BeatFlagController();
+        Instance.isGameOn = false;
+        Instance.beatFlagCtrl = new BeatFlagController();
 
-        gameSessionTime = 0;
-        gameLevelTime = 0;
+        Instance.gameSessionTime = 0;
+        Instance.gameLevelTime = 0;
 
         SetUIText(MIDTEXT_LABEL_NAME, "Tap to start");
 
-        pnlEndgame = GameObject.Find(ENDGAME_MENU_NAME);
-        if (pnlEndgame != null)
-            if (pnlEndgame.gameObject.activeSelf)
-                pnlEndgame.gameObject.SetActive(false);
+        Instance.pnlEndgame = GameObject.Find(ENDGAME_MENU_NAME);
+        if (Instance.pnlEndgame != null)
+            if (Instance.pnlEndgame.gameObject.activeSelf)
+                Instance.pnlEndgame.gameObject.SetActive(false);
 
     }
 
@@ -43,34 +53,34 @@ public class GameBehaviour : MonoBehaviour
     void Update()
     {
         // RELENTLESS ACTIONS
-        gameSessionTime += Time.deltaTime;
+        Instance.gameSessionTime += Time.deltaTime;
 
         // CONDITIONAL ACTIONS
-        switch (isGameOn)
+        switch (Instance.isGameOn)
         {
             case true:
                 GameObject rocket = GameObject.Find(ROCKET_OBJ_NAME);
 
                 if (rocket != null)
                 {
-                    gameLevelTime += Time.deltaTime;
+                    Instance.gameLevelTime += Time.deltaTime;
 
                     Vector3 v = rocket.transform.position;
                     v.y = v.y + FLIGHT_SPEED;
                     rocket.transform.position = v;
 
-                    if (beatFlagCtrl.IsUntakenFlagExists(gameLevelTime))
+                    if (Instance.beatFlagCtrl.IsUntakenFlagExists(Instance.gameLevelTime))
                     {
-                        Debug.Log($"SPAN: {gameLevelTime}");
+                        Debug.Log($"SPAN: {Instance.gameLevelTime}");
                         SetUIText(MIDTEXT_LABEL_NAME, "TAP!");
-                        SetUIText(GLOBALTIME_LABEL_NAME, beatFlagCtrl.TimeLeftThisSpan(gameLevelTime).ToString("F2"));
+                        SetUIText(GLOBALTIME_LABEL_NAME, Instance.beatFlagCtrl.TimeLeftThisSpan(Instance.gameLevelTime).ToString("F2"));
 
                         if (Keyboard.current.ctrlKey.isPressed)
                         {
-                            if (beatFlagCtrl.IsUntakenFlagExists(gameLevelTime))
+                            if (Instance.beatFlagCtrl.IsUntakenFlagExists(Instance.gameLevelTime))
                             {
-                                beatFlagCtrl.SetFlagTaken(gameLevelTime);
-                                Debug.Log($"FLAG: {gameLevelTime}");
+                                Instance.beatFlagCtrl.SetFlagTaken(Instance.gameLevelTime);
+                                Debug.Log($"FLAG: {Instance.gameLevelTime}");
                             }
                         }
                     }
@@ -81,19 +91,19 @@ public class GameBehaviour : MonoBehaviour
                     }
 
 
-                    if (beatFlagCtrl.IsWinAchieved())
+                    if (Instance.beatFlagCtrl.IsWinAchieved())
                         SetUIText(MIDTEXT_LABEL_NAME, "WIN");
-                    else if (beatFlagCtrl.IsLoseAchieved(gameLevelTime))
+                    else if (Instance.beatFlagCtrl.IsLoseAchieved(Instance.gameLevelTime))
                         SetUIText(MIDTEXT_LABEL_NAME, "LOSE");
 
-                    if (beatFlagCtrl.IsGameEnded(gameLevelTime))
+                    if (Instance.beatFlagCtrl.IsGameEnded(Instance.gameLevelTime))
                     {
                         SetUIText(GLOBALTIME_LABEL_NAME, string.Empty); // Simplication can lead to delayed timer vanish
                         GameObject.Find(MAINCAMERA_NAME).gameObject.transform.parent = GameObject.Find(MAINCONTAINER_NAME).gameObject.transform;
 
-                        if (pnlEndgame != null)
-                            if (!pnlEndgame.gameObject.activeSelf)
-                                pnlEndgame.gameObject.SetActive(true);
+                        if (Instance.pnlEndgame != null)
+                            if (!Instance.pnlEndgame.gameObject.activeSelf)
+                                Instance.pnlEndgame.gameObject.SetActive(true);
                     }
                 }
                 else
@@ -109,7 +119,7 @@ public class GameBehaviour : MonoBehaviour
             default:
                 if (Keyboard.current.enterKey.isPressed)
                 {
-                    isGameOn = true;
+                    Instance.isGameOn = true;
                     Debug.Log("STARTED");
                     PlayMusicLevel1();
                 }
@@ -156,6 +166,13 @@ public class GameBehaviour : MonoBehaviour
         }
         else
             Debug.Log($"Could not get object \"{SOUNDPLAYER_NAME}\"");
+    }
+    #endregion
+
+    #region GET/SET
+    public void StartGame()
+    {
+        Instance.isGameOn = true;
     }
     #endregion
 }

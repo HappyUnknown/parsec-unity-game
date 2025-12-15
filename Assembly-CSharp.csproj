@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Behaviours\MusicBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\PregameMenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\Entities\BeatFlagItem.cs" />
     <Compile Include="Assets\Scripts\Entities\BeatFlagController.cs" />
     <Compile Include="Assets\Scripts\Behaviours\MainMenuBehaviour.cs" />
