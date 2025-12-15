@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class GameBehaviour : MonoBehaviour
 {
-    const string AFTERGAME_MENU_NAME = "AfterGameMenu";
+    const string ENDGAME_MENU_NAME = "EndgameMenu";
     const string MIDTEXT_LABEL_NAME = "MidText";
     const string GLOBALTIME_LABEL_NAME = "GlobalTime";
     const string ROCKET_OBJ_NAME = "Rocket";
@@ -19,7 +19,7 @@ public class GameBehaviour : MonoBehaviour
     float gameLevelTime;
 
     BeatFlagController beatFlagCtrl;
-    GameObject pnlAfterGame;
+    GameObject pnlEndgame;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,10 +32,10 @@ public class GameBehaviour : MonoBehaviour
 
         SetUIText(MIDTEXT_LABEL_NAME, "Tap to start");
 
-        pnlAfterGame = GameObject.Find(AFTERGAME_MENU_NAME);
-        if (pnlAfterGame != null)
-            if (pnlAfterGame.gameObject.activeSelf)
-                pnlAfterGame.gameObject.SetActive(false);
+        pnlEndgame = GameObject.Find(ENDGAME_MENU_NAME);
+        if (pnlEndgame != null)
+            if (pnlEndgame.gameObject.activeSelf)
+                pnlEndgame.gameObject.SetActive(false);
 
     }
 
@@ -91,9 +91,9 @@ public class GameBehaviour : MonoBehaviour
                         SetUIText(GLOBALTIME_LABEL_NAME, string.Empty); // Simplication can lead to delayed timer vanish
                         GameObject.Find(MAINCAMERA_NAME).gameObject.transform.parent = GameObject.Find(MAINCONTAINER_NAME).gameObject.transform;
 
-                        if (pnlAfterGame != null)
-                            if (!pnlAfterGame.gameObject.activeSelf)
-                                pnlAfterGame.gameObject.SetActive(true);
+                        if (pnlEndgame != null)
+                            if (!pnlEndgame.gameObject.activeSelf)
+                                pnlEndgame.gameObject.SetActive(true);
                     }
                 }
                 else

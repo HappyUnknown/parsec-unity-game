@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Behaviours\MainMenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\RocketBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\GameBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\EndgameMenuBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
