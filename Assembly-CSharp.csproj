@@ -61,12 +61,13 @@
     <Analyzer Include="D:\APPS\BUSY\Unity\Editor\6000.2.10f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\MusicBehaviour.cs" />
-    <Compile Include="Assets\Scripts\MainMenuBehaviour.cs" />
-    <Compile Include="Assets\Scripts\BeatFlagItem.cs" />
-    <Compile Include="Assets\Scripts\RocketBehaviour.cs" />
-    <Compile Include="Assets\Scripts\GameBehaviour.cs" />
-    <Compile Include="Assets\Scripts\BeatFlagController.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\MusicBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Entities\BeatFlagItem.cs" />
+    <Compile Include="Assets\Scripts\Entities\BeatFlagController.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\MainMenuBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\RocketBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\GameBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\EndgameMenuBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
