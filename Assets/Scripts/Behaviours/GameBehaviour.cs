@@ -118,11 +118,7 @@ public class GameBehaviour : MonoBehaviour
             case false:
             default:
                 if (Keyboard.current.enterKey.isPressed)
-                {
-                    Instance.isGameOn = true;
-                    Debug.Log("STARTED");
-                    PlayMusicLevel1();
-                }
+                    StartGame();
                 break;
         }
 
@@ -173,6 +169,7 @@ public class GameBehaviour : MonoBehaviour
     public void StartGame()
     {
         Instance.isGameOn = true;
+        PlayMusicLevel1();
     }
     #endregion
 }
