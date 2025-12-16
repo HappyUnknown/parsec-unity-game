@@ -61,6 +61,7 @@
     <Analyzer Include="D:\APPS\BUSY\Unity\Editor\6000.2.10f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Behaviours\TapPanelBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\MusicBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\PregameMenuBehaviour.cs" />
     <Compile Include="Assets\Scripts\Entities\BeatFlagItem.cs" />
@@ -606,6 +607,14 @@
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>Library\PackageCache\com.unity.collections@aea9d3bd5e19\Unity.Collections.Tests\System.Runtime.CompilerServices.Unsafe\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>D:\APPS\BUSY\Unity\Editor\6000.2.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>D:\APPS\BUSY\Unity\Editor\6000.2.10f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

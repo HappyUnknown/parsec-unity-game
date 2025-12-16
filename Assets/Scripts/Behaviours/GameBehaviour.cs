@@ -46,7 +46,6 @@ public class GameBehaviour : MonoBehaviour
         if (Instance.pnlEndgame != null)
             if (Instance.pnlEndgame.gameObject.activeSelf)
                 Instance.pnlEndgame.gameObject.SetActive(false);
-
     }
 
     // Update is called once per frame
@@ -75,7 +74,7 @@ public class GameBehaviour : MonoBehaviour
                         SetUIText(MIDTEXT_LABEL_NAME, "TAP!");
                         SetUIText(GLOBALTIME_LABEL_NAME, Instance.beatFlagCtrl.TimeLeftThisSpan(Instance.gameLevelTime).ToString("F2"));
 
-                        if (Keyboard.current.ctrlKey.isPressed)
+                        if (TapPanelBehaviour.Instance.IsClicked)
                         {
                             if (Instance.beatFlagCtrl.IsUntakenFlagExists(Instance.gameLevelTime))
                             {
