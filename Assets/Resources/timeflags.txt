@@ -1,2 +1,32 @@
-{"timePoint": 5.0, "armAround": 0.5, "isTaken": false}
-{"timePoint": 8.0, "armAround": 0.5, "isTaken": false}
+{"timePoint": 5.0, "armAround": 0.1, "isTaken": false}
+{"timePoint": 8.0, "armAround": 0.1, "isTaken": false}
+{"timePoint":1.5992733240127564,"armAround":0.1,"isTaken":false}
+{"timePoint":2.176971435546875,"armAround":0.1,"isTaken":false}
+{"timePoint":3.1901888847351076,"armAround":0.1,"isTaken":false}
+{"timePoint":3.696223020553589,"armAround":0.1,"isTaken":false}
+{"timePoint":4.270380973815918,"armAround":0.1,"isTaken":false}
+{"timePoint":4.944839954376221,"armAround":0.1,"isTaken":false}
+{"timePoint":5.9230475425720219,"armAround":0.1,"isTaken":false}
+{"timePoint":6.396537780761719,"armAround":0.1,"isTaken":false}
+{"timePoint":6.913047790527344,"armAround":0.1,"isTaken":false}
+{"timePoint":7.565065860748291,"armAround":0.1,"isTaken":false}
+{"timePoint":8.566732406616211,"armAround":0.1,"isTaken":false}
+{"timePoint":9.028039932250977,"armAround":0.1,"isTaken":false}
+{"timePoint":9.567509651184082,"armAround":0.1,"isTaken":false}
+{"timePoint":10.177949333190918,"armAround":0.1,"isTaken":false}
+{"timePoint":11.221510887145996,"armAround":0.1,"isTaken":false}
+{"timePoint":11.728707313537598,"armAround":0.1,"isTaken":false}
+{"timePoint":12.23499584197998,"armAround":0.1,"isTaken":false}
+{"timePoint":13.021551132202149,"armAround":0.1,"isTaken":false}
+{"timePoint":13.900127410888672,"armAround":0.1,"isTaken":false}
+{"timePoint":14.394987106323243,"armAround":0.1,"isTaken":false}
+{"timePoint":14.923375129699707,"armAround":0.1,"isTaken":false}
+{"timePoint":15.599684715270996,"armAround":0.1,"isTaken":false}
+{"timePoint":16.578529357910158,"armAround":0.1,"isTaken":false}
+{"timePoint":17.08403205871582,"armAround":0.1,"isTaken":false}
+{"timePoint":17.600589752197267,"armAround":0.1,"isTaken":false}
+{"timePoint":18.322006225585939,"armAround":0.1,"isTaken":false}
+{"timePoint":19.27789306640625,"armAround":0.1,"isTaken":false}
+{"timePoint":19.727130889892579,"armAround":0.1,"isTaken":false}
+{"timePoint":20.19079246520996,"armAround":0.1,"isTaken":false}
+{"timePoint":20.886516571044923,"armAround":0.1,"isTaken":false}

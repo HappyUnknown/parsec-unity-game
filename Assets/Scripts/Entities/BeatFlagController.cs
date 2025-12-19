@@ -15,9 +15,12 @@ namespace Assets.Scripts
         /// Contains whole batch of beat flags with timePoint and armAround
         /// </summary>
         public List<BeatFlagItem> BeatFlags { get; set; }
+        public static string FlagFilePath { get; set; }
 
         public BeatFlagController(string flagFilePath)
         {
+            FlagFilePath = flagFilePath;
+
             string[] flagLines = File.ReadAllLines(flagFilePath);
             BeatFlags = new List<BeatFlagItem>();
             foreach (string line in flagLines)
@@ -153,6 +156,21 @@ namespace Assets.Scripts
         public bool IsGameEnded(float timePoint)
         {
             return IsWinAchieved() || IsLoseAchieved(timePoint);
+        }
+
+        public static bool AppendTimeFlag(BeatFlagItem flag)
+        {
+            if (!File.Exists(FlagFilePath))
+                File.Create(FlagFilePath).Close();
+            
+            if (File.Exists(FlagFilePath))
+            {
+                string flagLine = JsonUtility.ToJson(flag);
+                File.AppendAllText(FlagFilePath, flagLine + Environment.NewLine);
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

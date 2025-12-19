@@ -14,6 +14,7 @@ public class GameBehaviour : MonoBehaviour
     const string SOUNDPLAYER_NAME = "SoundPlayer";
     const float FLIGHT_SPEED = .1f;
 
+    bool isManualTimingOn;
     bool isGameOn;
     float gameSessionTime;
     float gameLevelTime;
@@ -35,6 +36,7 @@ public class GameBehaviour : MonoBehaviour
     void Start()
     {
         Instance.isGameOn = false;
+        Instance.isManualTimingOn = false;
         Instance.beatFlagCtrl = new BeatFlagController("Assets\\Resources\\timeflags.txt");
 
         Instance.gameSessionTime = 0;
@@ -63,6 +65,14 @@ public class GameBehaviour : MonoBehaviour
                 if (rocket != null)
                 {
                     Instance.gameLevelTime += Time.deltaTime;
+
+                    if (isManualTimingOn)
+                        if (Keyboard.current.leftShiftKey.wasPressedThisFrame)
+                        {
+                            float timepoint = Instance.gameLevelTime;
+                            BeatFlagController.AppendTimeFlag(new BeatFlagItem(timepoint, 0.5f));
+                            Debug.Log($"New flag on {timepoint} written");
+                        }
 
                     Vector3 v = rocket.transform.position;
                     v.y = v.y + FLIGHT_SPEED;
