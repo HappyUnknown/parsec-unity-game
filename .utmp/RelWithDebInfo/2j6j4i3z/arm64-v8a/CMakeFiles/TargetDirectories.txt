@@ -1,0 +1,8 @@
+D:/FILES/ACTIVITY/RFKEB-GameJam-2025/unity-project/parsec-rfkeb/.utmp/RelWithDebInfo/2j6j4i3z/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/FILES/ACTIVITY/RFKEB-GameJam-2025/unity-project/parsec-rfkeb/.utmp/RelWithDebInfo/2j6j4i3z/arm64-v8a/CMakeFiles/rebuild_cache.dir
+D:/FILES/ACTIVITY/RFKEB-GameJam-2025/unity-project/parsec-rfkeb/.utmp/RelWithDebInfo/2j6j4i3z/arm64-v8a/GameActivity/CMakeFiles/game.dir
+D:/FILES/ACTIVITY/RFKEB-GameJam-2025/unity-project/parsec-rfkeb/.utmp/RelWithDebInfo/2j6j4i3z/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+D:/FILES/ACTIVITY/RFKEB-GameJam-2025/unity-project/parsec-rfkeb/.utmp/RelWithDebInfo/2j6j4i3z/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
+D:/FILES/ACTIVITY/RFKEB-GameJam-2025/unity-project/parsec-rfkeb/.utmp/RelWithDebInfo/2j6j4i3z/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+D:/FILES/ACTIVITY/RFKEB-GameJam-2025/unity-project/parsec-rfkeb/.utmp/RelWithDebInfo/2j6j4i3z/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+D:/FILES/ACTIVITY/RFKEB-GameJam-2025/unity-project/parsec-rfkeb/.utmp/RelWithDebInfo/2j6j4i3z/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir

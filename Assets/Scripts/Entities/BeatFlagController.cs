@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor.ShaderGraph.Serialization;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -12,12 +15,18 @@ namespace Assets.Scripts
         /// Contains whole batch of beat flags with timePoint and armAround
         /// </summary>
         public List<BeatFlagItem> BeatFlags { get; set; }
-        public BeatFlagController()
+
+        public BeatFlagController(string flagFilePath)
         {
-            BeatFlags = new List<BeatFlagItem>{
-                        new BeatFlagItem(5, 0.5f),
-                        new BeatFlagItem(8, 0.5f)
-            };
+            string[] flagLines = File.ReadAllLines(flagFilePath);
+            BeatFlags = new List<BeatFlagItem>();
+            foreach (string line in flagLines)
+            {
+                BeatFlagItem item = JsonUtility.FromJson<BeatFlagItem>(line);
+                Debug.Log(line);
+                BeatFlags.Add(item);
+                Debug.Log(item.TimePoint);
+            }
         }
 
         /// <summary>

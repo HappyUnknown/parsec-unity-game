@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -11,17 +12,24 @@ namespace Assets.Scripts
         /// <summary>
         /// Pivotal point of a beat flag
         /// </summary>
-        public float TimePoint { get; set; }
+        [SerializeField]
+        private float timePoint;
 
         /// <summary>
         /// Modular shift value. Applied to TimePoint.
         /// </summary>
-        public float ArmAround { get; set; }
+        [SerializeField]
+        private float armAround;
 
         /// <summary>
         /// Flag disposal state
         /// </summary>
-        public bool IsTaken { get; set; }
+        [SerializeField]
+        private bool isTaken;
+
+        public float TimePoint { get { return timePoint; } set { timePoint = value; } }
+        public float ArmAround { get { return armAround; } set { armAround = value; } }
+        public bool IsTaken { get { return isTaken; } set { isTaken = value; } }
 
         /// <summary>
         /// Default constructor

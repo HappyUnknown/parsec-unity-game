@@ -1,5 +1,5 @@
 using Assets.Scripts;
-using TMPro; // Необхідно для роботи з текстом
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,7 +35,7 @@ public class GameBehaviour : MonoBehaviour
     void Start()
     {
         Instance.isGameOn = false;
-        Instance.beatFlagCtrl = new BeatFlagController();
+        Instance.beatFlagCtrl = new BeatFlagController("Assets\\Resources\\timeflags.txt");
 
         Instance.gameSessionTime = 0;
         Instance.gameLevelTime = 0;
@@ -110,7 +110,6 @@ public class GameBehaviour : MonoBehaviour
                     Debug.Log("ROCKET does not exist");
                     return;
                 }
-
 
                 break;
 

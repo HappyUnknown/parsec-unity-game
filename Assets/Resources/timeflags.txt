@@ -1,0 +1,2 @@
+{"timePoint": 5.0, "armAround": 0.5, "isTaken": false}
+{"timePoint": 8.0, "armAround": 0.5, "isTaken": false}
