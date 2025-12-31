@@ -26,9 +26,7 @@ namespace Assets.Scripts
             foreach (string line in flagLines)
             {
                 BeatFlagItem item = JsonUtility.FromJson<BeatFlagItem>(line);
-                Debug.Log(line);
                 BeatFlags.Add(item);
-                Debug.Log(item.TimePoint);
             }
         }
 
@@ -162,7 +160,7 @@ namespace Assets.Scripts
         {
             if (!File.Exists(FlagFilePath))
                 File.Create(FlagFilePath).Close();
-            
+
             if (File.Exists(FlagFilePath))
             {
                 string flagLine = JsonUtility.ToJson(flag);
@@ -171,6 +169,27 @@ namespace Assets.Scripts
             }
             else
                 return false;
+        }
+
+        public List<int> GetFloodedFlags(int flagIndex, float sensitivity = 0)
+        {
+            List<int> flags = new List<int>();
+            float stillFlagLeft = BeatFlags[flagIndex].TimePoint - BeatFlags[flagIndex].ArmAround - sensitivity;
+            float stillFlagRight = BeatFlags[flagIndex].TimePoint + BeatFlags[flagIndex].ArmAround + sensitivity;
+            float iterFlagLeft, iterFlagRight;
+            bool leftIterInclude, rightIterInclude, fullIterInclude, fullStillInclude;
+            for (int i = 0; i < BeatFlags.Count; i++)
+            {
+                iterFlagLeft = BeatFlags[i].TimePoint - BeatFlags[i].ArmAround;
+                iterFlagRight = BeatFlags[i].TimePoint + BeatFlags[i].ArmAround;
+                leftIterInclude = iterFlagLeft > stillFlagLeft && iterFlagLeft < stillFlagRight;
+                rightIterInclude = iterFlagRight > stillFlagLeft && iterFlagRight < stillFlagRight;
+                fullStillInclude = iterFlagRight > stillFlagRight && iterFlagLeft < stillFlagLeft;
+                fullIterInclude = iterFlagRight < stillFlagRight && iterFlagLeft > stillFlagLeft;
+                if (leftIterInclude || rightIterInclude || fullStillInclude || fullIterInclude)
+                    flags.Add(i);
+            }
+            return flags;
         }
     }
 }
