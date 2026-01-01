@@ -174,21 +174,9 @@ namespace Assets.Scripts
         public List<int> GetFloodedFlags(int flagIndex, float sensitivity = 0)
         {
             List<int> flags = new List<int>();
-            float stillFlagLeft = BeatFlags[flagIndex].TimePoint - BeatFlags[flagIndex].ArmAround - sensitivity;
-            float stillFlagRight = BeatFlags[flagIndex].TimePoint + BeatFlags[flagIndex].ArmAround + sensitivity;
-            float iterFlagLeft, iterFlagRight;
-            bool leftIterInclude, rightIterInclude, fullIterInclude, fullStillInclude;
             for (int i = 0; i < BeatFlags.Count; i++)
-            {
-                iterFlagLeft = BeatFlags[i].TimePoint - BeatFlags[i].ArmAround;
-                iterFlagRight = BeatFlags[i].TimePoint + BeatFlags[i].ArmAround;
-                leftIterInclude = iterFlagLeft > stillFlagLeft && iterFlagLeft < stillFlagRight;
-                rightIterInclude = iterFlagRight > stillFlagLeft && iterFlagRight < stillFlagRight;
-                fullStillInclude = iterFlagRight > stillFlagRight && iterFlagLeft < stillFlagLeft;
-                fullIterInclude = iterFlagRight < stillFlagRight && iterFlagLeft > stillFlagLeft;
-                if (leftIterInclude || rightIterInclude || fullStillInclude || fullIterInclude)
+                if (BeatFlags[i].Interferes(BeatFlags[flagIndex], sensitivity))
                     flags.Add(i);
-            }
             return flags;
         }
     }

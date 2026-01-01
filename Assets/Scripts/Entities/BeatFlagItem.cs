@@ -52,5 +52,20 @@ namespace Assets.Scripts
             ArmAround = armAround;
             IsTaken = false;
         }
+
+        public bool Interferes(BeatFlagItem other, float sensitivity)
+        {
+            float stillFlagLeft = other.TimePoint - other.ArmAround - sensitivity;
+            float stillFlagRight = other.TimePoint + other.ArmAround + sensitivity;
+            float iterFlagLeft = this.TimePoint - this.ArmAround;
+            float iterFlagRight = this.TimePoint + this.ArmAround;
+
+            bool leftIterInclude = iterFlagLeft > stillFlagLeft && iterFlagLeft < stillFlagRight;
+            bool rightIterInclude = iterFlagRight > stillFlagLeft && iterFlagRight < stillFlagRight;
+            bool fullStillInclude = iterFlagRight > stillFlagRight && iterFlagLeft < stillFlagLeft;
+            bool fullIterInclude = iterFlagRight < stillFlagRight && iterFlagLeft > stillFlagLeft;
+
+            return leftIterInclude || rightIterInclude || fullStillInclude || fullIterInclude;
+        }
     }
 }
