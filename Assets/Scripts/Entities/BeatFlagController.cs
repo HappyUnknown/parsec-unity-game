@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEditor.ShaderGraph.Serialization;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -232,13 +233,22 @@ namespace Assets.Scripts
             return floodFlags;
         }
 
-        public List<(int, int)> GetAllFloodedFlags()
+        /// <summary>
+        /// Estimates flags, which timespans overlap
+        /// </summary>
+        /// <param name="invariant">Flip tuple by ascension?</param>
+        /// <param name="sensitivity">Additional timeflag radius</param>
+        /// <returns>Tuples, where Item1 - left join, Item2 - right join</returns>
+        public List<(int, int)> GetFloodedFlags(bool invariant = true, float sensitivity = 0)
         {
             List<(int, int)> floodFlagIndexes = new();
             for (int i = 0; i < BeatFlags.Count; i++)
-            {
-                floodFlagIndexes.AddRange(GetFloodedFlags(i));
-            }
+                floodFlagIndexes.AddRange(GetFloodedFlags(i, sensitivity));
+
+            if (invariant)
+                for (int i = 0; i < floodFlagIndexes.Count; i++)
+                    if (floodFlagIndexes[i].Item1 > floodFlagIndexes[i].Item2)
+                        floodFlagIndexes[i] = (floodFlagIndexes[i].Item2, floodFlagIndexes[i].Item1);
             floodFlagIndexes = floodFlagIndexes.Distinct().ToList();
 
             return floodFlagIndexes;
