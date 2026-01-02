@@ -223,24 +223,24 @@ namespace Assets.Scripts
         }
         #endregion
 
-        public List<int> GetFloodedFlags(int flagIndex, float sensitivity = 0)
+        public List<(int, int)> GetFloodedFlags(int flagIndex, float sensitivity = 0)
         {
-            List<int> flags = new List<int>();
+            List<(int, int)> floodFlags = new();
             for (int i = 0; i < BeatFlags.Count; i++)
                 if (BeatFlags[i].Interferes(BeatFlags[flagIndex], sensitivity))
-                    flags.Add(i);
-            return flags;
+                    floodFlags.Add((i, flagIndex));
+            return floodFlags;
         }
 
-        public List<int> GetAllFloodedFlags()
+        public List<(int, int)> GetAllFloodedFlags()
         {
-            List<int> floodFlagIndexes = new List<int>();
+            List<(int, int)> floodFlagIndexes = new();
             for (int i = 0; i < BeatFlags.Count; i++)
             {
                 floodFlagIndexes.AddRange(GetFloodedFlags(i));
             }
             floodFlagIndexes = floodFlagIndexes.Distinct().ToList();
-            
+
             return floodFlagIndexes;
         }
     }
