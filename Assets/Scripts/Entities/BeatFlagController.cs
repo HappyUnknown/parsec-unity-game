@@ -224,7 +224,7 @@ namespace Assets.Scripts
         }
         #endregion
 
-        public List<(int, int)> GetFloodedFlags(int flagIndex, float sensitivity = 0)
+        public List<(int, int)> GetFloodedFlagsAt(int flagIndex, float sensitivity = 0)
         {
             List<(int, int)> floodFlags = new();
             for (int i = 0; i < BeatFlags.Count; i++)
@@ -239,17 +239,22 @@ namespace Assets.Scripts
         /// <param name="invariant">Flip tuple by ascension?</param>
         /// <param name="sensitivity">Additional timeflag radius</param>
         /// <returns>Tuples, where Item1 - left join, Item2 - right join</returns>
-        public List<(int, int)> GetFloodedFlags(bool invariant = true, float sensitivity = 0)
+        public List<int> GetFloodedFlagIndexes(bool invariant = true, float sensitivity = 0)
         {
-            List<(int, int)> floodFlagIndexes = new();
+            List<(int, int)> floodFlagPairs = new();
             for (int i = 0; i < BeatFlags.Count; i++)
-                floodFlagIndexes.AddRange(GetFloodedFlags(i, sensitivity));
+                floodFlagPairs.AddRange(GetFloodedFlagsAt(i, sensitivity));
 
             if (invariant)
-                for (int i = 0; i < floodFlagIndexes.Count; i++)
-                    if (floodFlagIndexes[i].Item1 > floodFlagIndexes[i].Item2)
-                        floodFlagIndexes[i] = (floodFlagIndexes[i].Item2, floodFlagIndexes[i].Item1);
-            floodFlagIndexes = floodFlagIndexes.Distinct().ToList();
+                for (int i = 0; i < floodFlagPairs.Count; i++)
+                    if (floodFlagPairs[i].Item1 > floodFlagPairs[i].Item2)
+                        floodFlagPairs[i] = (floodFlagPairs[i].Item2, floodFlagPairs[i].Item1);
+            floodFlagPairs = floodFlagPairs.Distinct().ToList();
+
+            // Get only second one of overlaping entities
+            List<int> floodFlagIndexes = new();
+            foreach ((int, int) flagTuple in floodFlagPairs)
+                floodFlagIndexes.Add(flagTuple.Item2);
 
             return floodFlagIndexes;
         }
