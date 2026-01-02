@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -48,6 +49,8 @@ public class GameBehaviour : MonoBehaviour
         if (Instance.pnlEndgame != null)
             if (Instance.pnlEndgame.gameObject.activeSelf)
                 Instance.pnlEndgame.gameObject.SetActive(false);
+
+        Debug.Log(string.Join(", ", Instance.beatFlagCtrl.GetProblematicFlagIndexes(0.5f)));
     }
 
     // Update is called once per frame

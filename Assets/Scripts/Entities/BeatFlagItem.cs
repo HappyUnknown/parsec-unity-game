@@ -53,10 +53,10 @@ namespace Assets.Scripts
             IsTaken = false;
         }
 
-        public bool Interferes(BeatFlagItem other, float sensitivity)
+        public bool Interferes(BeatFlagItem other)
         {
-            float stillFlagLeft = other.TimePoint - other.ArmAround - sensitivity;
-            float stillFlagRight = other.TimePoint + other.ArmAround + sensitivity;
+            float stillFlagLeft = other.TimePoint - other.ArmAround;
+            float stillFlagRight = other.TimePoint + other.ArmAround;
             float iterFlagLeft = this.TimePoint - this.ArmAround;
             float iterFlagRight = this.TimePoint + this.ArmAround;
 
@@ -66,6 +66,13 @@ namespace Assets.Scripts
             bool fullIterInclude = iterFlagRight < stillFlagRight && iterFlagLeft > stillFlagLeft;
 
             return leftIterInclude || rightIterInclude || fullStillInclude || fullIterInclude;
+        }
+
+        public bool IsCollapsed(float sensitivity)
+        {
+            float start = TimePoint - ArmAround;
+            float end = TimePoint + ArmAround;
+            return end - start < sensitivity;
         }
     }
 }

@@ -224,11 +224,11 @@ namespace Assets.Scripts
         }
         #endregion
 
-        public List<(int, int)> GetFloodedFlagsAt(int flagIndex, float sensitivity = 0)
+        public List<(int, int)> GetFloodedFlagsAt(int flagIndex)
         {
             List<(int, int)> floodFlags = new();
             for (int i = 0; i < BeatFlags.Count; i++)
-                if (BeatFlags[i].Interferes(BeatFlags[flagIndex], sensitivity))
+                if (BeatFlags[i].Interferes(BeatFlags[flagIndex]))
                     floodFlags.Add((i, flagIndex));
             return floodFlags;
         }
@@ -239,11 +239,11 @@ namespace Assets.Scripts
         /// <param name="invariant">Flip tuple by ascension?</param>
         /// <param name="sensitivity">Additional timeflag radius</param>
         /// <returns>Tuples, where Item1 - left join, Item2 - right join</returns>
-        public List<int> GetFloodedFlagIndexes(bool invariant = true, float sensitivity = 0)
+        public List<int> GetFloodedFlagIndexes(bool invariant = true)
         {
             List<(int, int)> floodFlagPairs = new();
             for (int i = 0; i < BeatFlags.Count; i++)
-                floodFlagPairs.AddRange(GetFloodedFlagsAt(i, sensitivity));
+                floodFlagPairs.AddRange(GetFloodedFlagsAt(i));
 
             if (invariant)
                 for (int i = 0; i < floodFlagPairs.Count; i++)
@@ -257,6 +257,27 @@ namespace Assets.Scripts
                 floodFlagIndexes.Add(flagTuple.Item2);
 
             return floodFlagIndexes;
+        }
+
+        public List<int> GetCollapsedFlagIndexes(float reactionTime)
+        {
+            List<int> collapsedFlagIndexes = new();
+            for (int i = 0; i < BeatFlags.Count; i++)
+                if (BeatFlags[i].IsCollapsed(reactionTime))
+                    collapsedFlagIndexes.Add(i);
+            return collapsedFlagIndexes;
+        }
+
+        public List<int> GetProblematicFlagIndexes(float reactionTime)
+        {
+            List<int> clpsFlagIdxs = GetCollapsedFlagIndexes(reactionTime);
+            List<int> fldFlagIdxs = GetFloodedFlagIndexes();
+            List<int> prblmFlgIdxs = new();
+            prblmFlgIdxs.AddRange(clpsFlagIdxs);
+            prblmFlgIdxs.AddRange(fldFlagIdxs);
+            prblmFlgIdxs = prblmFlgIdxs.Distinct().ToList();
+
+            return prblmFlgIdxs;
         }
     }
 }
