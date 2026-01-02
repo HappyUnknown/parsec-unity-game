@@ -156,6 +156,27 @@ namespace Assets.Scripts
             return IsWinAchieved() || IsLoseAchieved(timePoint);
         }
 
+        public static bool WriteAllTimeFlags(List<BeatFlagItem> flags)
+        {
+            if (!File.Exists(FlagFilePath))
+                File.Create(FlagFilePath).Close();
+
+            if (File.Exists(FlagFilePath))
+            {
+                List<string> content = new List<string>();
+                for (int i = 0; i < flags.Count; i++)
+                {
+                    string flagLine = JsonUtility.ToJson(flags[i]);
+                    content.Add(flagLine);
+                }
+                File.WriteAllLines(FlagFilePath, content);
+                
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool AppendTimeFlag(BeatFlagItem flag)
         {
             if (!File.Exists(FlagFilePath))
