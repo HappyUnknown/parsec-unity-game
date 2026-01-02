@@ -231,5 +231,17 @@ namespace Assets.Scripts
                     flags.Add(i);
             return flags;
         }
+
+        public List<int> GetAllFloodedFlags()
+        {
+            List<int> floodFlagIndexes = new List<int>();
+            for (int i = 0; i < BeatFlags.Count; i++)
+            {
+                floodFlagIndexes.AddRange(GetFloodedFlags(i));
+            }
+            floodFlagIndexes = floodFlagIndexes.Distinct().ToList();
+            
+            return floodFlagIndexes;
+        }
     }
 }
