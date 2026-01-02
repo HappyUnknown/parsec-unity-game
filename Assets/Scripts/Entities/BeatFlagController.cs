@@ -21,13 +21,7 @@ namespace Assets.Scripts
         {
             FlagFilePath = flagFilePath;
 
-            string[] flagLines = File.ReadAllLines(flagFilePath);
-            BeatFlags = new List<BeatFlagItem>();
-            foreach (string line in flagLines)
-            {
-                BeatFlagItem item = JsonUtility.FromJson<BeatFlagItem>(line);
-                BeatFlags.Add(item);
-            }
+            BeatFlags = ReadAllFlags();
         }
 
         /// <summary>
@@ -156,6 +150,7 @@ namespace Assets.Scripts
             return IsWinAchieved() || IsLoseAchieved(timePoint);
         }
 
+        #region FLAG CRUD
         public static bool WriteAllTimeFlags(List<BeatFlagItem> flags)
         {
             if (!File.Exists(FlagFilePath))
@@ -170,11 +165,25 @@ namespace Assets.Scripts
                     content.Add(flagLine);
                 }
                 File.WriteAllLines(FlagFilePath, content);
-                
+
                 return true;
             }
 
             return false;
+        }
+
+        public static List<BeatFlagItem> ReadAllFlags()
+        {
+            List<BeatFlagItem> flags = new();
+
+            string[] flagLines = File.ReadAllLines(FlagFilePath);
+            foreach (string line in flagLines)
+            {
+                BeatFlagItem item = JsonUtility.FromJson<BeatFlagItem>(line);
+                flags.Add(item);
+            }
+
+            return flags;
         }
 
         public static bool AppendTimeFlag(BeatFlagItem flag)
@@ -191,6 +200,7 @@ namespace Assets.Scripts
             else
                 return false;
         }
+        #endregion
 
         public List<int> GetFloodedFlags(int flagIndex, float sensitivity = 0)
         {
