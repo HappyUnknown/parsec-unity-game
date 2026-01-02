@@ -200,6 +200,27 @@ namespace Assets.Scripts
             else
                 return false;
         }
+
+        public static bool RemoveFlagsAt(params int[] flagIndexes)
+        {
+            if (!File.Exists(FlagFilePath))
+                File.Create(FlagFilePath).Close();
+
+            if (File.Exists(FlagFilePath))
+            {
+                List<BeatFlagItem> flags = ReadAllFlags();
+                List<BeatFlagItem> cleanFlags = new();
+                for (int i = 0; i < flags.Count; i++)
+                    if (i < flags.Count)
+                        if (!flagIndexes.Contains(i))
+                            cleanFlags.Add(flags[i]);
+                WriteAllTimeFlags(cleanFlags);
+
+                return true;
+            }
+
+            return false;
+        }
         #endregion
 
         public List<int> GetFloodedFlags(int flagIndex, float sensitivity = 0)
