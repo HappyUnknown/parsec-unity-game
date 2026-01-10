@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Entities\BeatFlagController.cs" />
     <Compile Include="Assets\Scripts\Behaviours\MenuManagerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\RocketBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\LevelBrowserBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\GameBehaviour.cs" />
     <Compile Include="Assets\Scripts\Behaviours\EndgameMenuBehaviour.cs" />
   </ItemGroup>
