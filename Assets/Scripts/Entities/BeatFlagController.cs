@@ -12,17 +12,11 @@ namespace Assets.Scripts
 {
     public class BeatFlagController
     {
-        /// <summary>
-        /// Contains whole batch of beat flags with timePoint and armAround
-        /// </summary>
-        public List<BeatFlagItem> BeatFlags { get; set; }
         public static string FlagFilePath { get; set; }
 
         public BeatFlagController(string flagFilePath)
         {
             FlagFilePath = flagFilePath;
-
-            BeatFlags = ReadAllFlags();
         }
 
         /// <summary>
@@ -32,9 +26,10 @@ namespace Assets.Scripts
         /// <returns></returns>
         public int GetFlagIndex(float timeFlag)
         {
-            for (int i = 0; i < BeatFlags.Count; i++)
+            var beatFlags = ReadAllFlags();
+            for (int i = 0; i < beatFlags.Count; i++)
             {
-                bool isTimeIntersects = timeFlag >= BeatFlags[i].TimePoint - BeatFlags[i].ArmAround && timeFlag <= BeatFlags[i].TimePoint + BeatFlags[i].ArmAround;
+                bool isTimeIntersects = timeFlag >= beatFlags[i].TimePoint - beatFlags[i].ArmAround && timeFlag <= beatFlags[i].TimePoint + beatFlags[i].ArmAround;
                 if (isTimeIntersects)
                     return i;
             }
@@ -71,10 +66,12 @@ namespace Assets.Scripts
         /// <returns></returns>
         public bool SetFlagTaken(float timeFlag)
         {
+            var beatFlags = ReadAllFlags();
             int flagIndex = GetFlagIndex(timeFlag);
             if (flagIndex != -1)
             {
-                BeatFlags[flagIndex].IsTaken = true;
+                beatFlags[flagIndex].IsTaken = true;
+                WriteAllTimeFlags(beatFlags);
                 return true;
             }
             return false;
@@ -88,10 +85,11 @@ namespace Assets.Scripts
         /// <returns></returns>
         public bool IsFlagTaken(float timeFlag)
         {
+            var beatFlags = ReadAllFlags();
             int flagIndex = GetFlagIndex(timeFlag);
             if (flagIndex == -1)
                 return true;
-            return BeatFlags[flagIndex].IsTaken;
+            return beatFlags[flagIndex].IsTaken;
         }
 
         /// <summary>
@@ -101,6 +99,7 @@ namespace Assets.Scripts
         /// <returns></returns>
         public float TimeLeftThisSpan(float timeFlag)
         {
+            var beatFlags = ReadAllFlags();
             float timeLeft = -1;
             if (IsFlagExists(timeFlag))
             {
@@ -108,7 +107,7 @@ namespace Assets.Scripts
                 int flagIndex = GetFlagIndex(timeFlag);
 
                 // Обчислюємо час від поточної точки до кінця флагу
-                float finalTime = BeatFlags[flagIndex].TimePoint + BeatFlags[flagIndex].ArmAround;
+                float finalTime = beatFlags[flagIndex].TimePoint + beatFlags[flagIndex].ArmAround;
 
                 timeLeft = finalTime - timeFlag;
                 return timeLeft;
@@ -122,7 +121,8 @@ namespace Assets.Scripts
         /// <returns></returns>
         public bool IsWinAchieved()
         {
-            foreach (BeatFlagItem flag in BeatFlags)
+            var beatFlags = ReadAllFlags();
+            foreach (BeatFlagItem flag in beatFlags)
                 if (!flag.IsTaken)
                     return false;
             return true;
@@ -135,7 +135,8 @@ namespace Assets.Scripts
         /// <returns></returns>
         public bool IsLoseAchieved(float timePoint)
         {
-            foreach (BeatFlagItem flag in BeatFlags)
+            var beatFlags = ReadAllFlags();
+            foreach (BeatFlagItem flag in beatFlags)
                 if (!flag.IsTaken && timePoint > flag.TimePoint + flag.ArmAround)
                     return true;
             return false;
@@ -226,9 +227,10 @@ namespace Assets.Scripts
 
         public List<(int, int)> GetFloodedFlagsAt(int flagIndex)
         {
+            var beatFlags = ReadAllFlags();
             List<(int, int)> floodFlags = new();
-            for (int i = 0; i < BeatFlags.Count; i++)
-                if (BeatFlags[i].Interferes(BeatFlags[flagIndex]))
+            for (int i = 0; i < beatFlags.Count; i++)
+                if (beatFlags[i].Interferes(beatFlags[flagIndex]))
                     floodFlags.Add((i, flagIndex));
             return floodFlags;
         }
@@ -241,8 +243,9 @@ namespace Assets.Scripts
         /// <returns>Tuples, where Item1 - left join, Item2 - right join</returns>
         public List<int> GetFloodedFlagIndexes(bool invariant = true)
         {
+            var beatFlags = ReadAllFlags();
             List<(int, int)> floodFlagPairs = new();
-            for (int i = 0; i < BeatFlags.Count; i++)
+            for (int i = 0; i < beatFlags.Count; i++)
                 floodFlagPairs.AddRange(GetFloodedFlagsAt(i));
 
             if (invariant)
@@ -261,9 +264,10 @@ namespace Assets.Scripts
 
         public List<int> GetCollapsedFlagIndexes(float reactionTime)
         {
+            var beatFlags = ReadAllFlags();
             List<int> collapsedFlagIndexes = new();
-            for (int i = 0; i < BeatFlags.Count; i++)
-                if (BeatFlags[i].IsCollapsed(reactionTime))
+            for (int i = 0; i < beatFlags.Count; i++)
+                if (beatFlags[i].IsCollapsed(reactionTime))
                     collapsedFlagIndexes.Add(i);
             return collapsedFlagIndexes;
         }
