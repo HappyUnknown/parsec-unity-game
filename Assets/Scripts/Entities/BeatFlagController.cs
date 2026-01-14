@@ -225,7 +225,7 @@ namespace Assets.Scripts
         }
         #endregion
 
-        public List<(int, int)> GetFloodedFlagsAt(int flagIndex)
+        public static List<(int, int)> GetFloodedFlagsAt(int flagIndex)
         {
             var beatFlags = ReadAllFlags();
             List<(int, int)> floodFlags = new();
@@ -241,7 +241,7 @@ namespace Assets.Scripts
         /// <param name="invariant">Flip tuple by ascension?</param>
         /// <param name="sensitivity">Additional timeflag radius</param>
         /// <returns>Tuples, where Item1 - left join, Item2 - right join</returns>
-        public List<int> GetFloodedFlagIndexes(bool invariant = true)
+        public static List<int> GetFloodedFlagIndexes(bool invariant = true)
         {
             var beatFlags = ReadAllFlags();
             List<(int, int)> floodFlagPairs = new();
@@ -262,7 +262,7 @@ namespace Assets.Scripts
             return floodFlagIndexes;
         }
 
-        public List<int> GetCollapsedFlagIndexes(float reactionTime)
+        public static List<int> GetCollapsedFlagIndexes(float reactionTime)
         {
             var beatFlags = ReadAllFlags();
             List<int> collapsedFlagIndexes = new();
@@ -272,16 +272,16 @@ namespace Assets.Scripts
             return collapsedFlagIndexes;
         }
 
-        public List<int> GetProblematicFlagIndexes(float reactionTime)
+        public static bool ClearProblematicFlagIndexes(float reactionTime)
         {
-            List<int> clpsFlagIdxs = GetCollapsedFlagIndexes(reactionTime);
-            List<int> fldFlagIdxs = GetFloodedFlagIndexes();
-            List<int> prblmFlgIdxs = new();
-            prblmFlgIdxs.AddRange(clpsFlagIdxs);
-            prblmFlgIdxs.AddRange(fldFlagIdxs);
-            prblmFlgIdxs = prblmFlgIdxs.Distinct().ToList();
+            // Collapsed are cleared first, because they are non-interactive conflicts,
+            // and so, their removal can cause resolve of interactive ones
+            int[] clpsIndexes = GetCollapsedFlagIndexes(reactionTime).ToArray();
+            RemoveFlagsAt(clpsIndexes);
+            int[] fldIndexes = GetFloodedFlagIndexes().ToArray();
+            RemoveFlagsAt(fldIndexes);
 
-            return prblmFlgIdxs;
+            return clpsIndexes.Length > 0 || fldIndexes.Length > 0;
         }
     }
 }

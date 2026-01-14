@@ -50,7 +50,7 @@ public class GameBehaviour : MonoBehaviour
             if (Instance.pnlEndgame.gameObject.activeSelf)
                 Instance.pnlEndgame.gameObject.SetActive(false);
 
-        Debug.Log(string.Join(", ", Instance.beatFlagCtrl.GetProblematicFlagIndexes(0.5f)));
+        BeatFlagController.ClearProblematicFlagIndexes(0.1f);
     }
 
     // Update is called once per frame

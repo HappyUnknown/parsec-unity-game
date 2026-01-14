@@ -1,7 +1,7 @@
 {"timePoint":5.0,"armAround":0.10000000149011612,"isTaken":false}
 {"timePoint":8.0,"armAround":0.10000000149011612,"isTaken":false}
-{"timePoint":1.5992733240127564,"armAround":0.10000000149011612,"isTaken":true}
-{"timePoint":2.176971435546875,"armAround":0.10000000149011612,"isTaken":true}
+{"timePoint":1.5992733240127564,"armAround":0.10000000149011612,"isTaken":false}
+{"timePoint":2.176971435546875,"armAround":0.10000000149011612,"isTaken":false}
 {"timePoint":3.1901888847351076,"armAround":0.10000000149011612,"isTaken":false}
 {"timePoint":3.696223020553589,"armAround":0.10000000149011612,"isTaken":false}
 {"timePoint":4.270380973815918,"armAround":0.10000000149011612,"isTaken":false}
