@@ -358,6 +358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelBrowserBehaviour
   btnPrefab: {fileID: 4989261381470861569, guid: b12bac3e8d600f74fa1bcbf976acadf3, type: 3}
+  levelButtons: []
 --- !u!1 &1116261591
 GameObject:
   m_ObjectHideFlags: 0
