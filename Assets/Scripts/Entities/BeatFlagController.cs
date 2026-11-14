@@ -17,6 +17,8 @@ namespace Assets.Scripts
         public BeatFlagController(string flagFilePath)
         {
             FlagFilePath = flagFilePath;
+
+            ResetFlags();
         }
 
         /// <summary>
@@ -282,6 +284,25 @@ namespace Assets.Scripts
             RemoveFlagsAt(fldIndexes);
 
             return clpsIndexes.Length > 0 || fldIndexes.Length > 0;
+        }
+
+        public static string ResetFlags()
+        {
+            try
+            {
+                var flags = ReadAllFlags();
+                for (int i = 0; i < flags.Count; i++)
+                {
+                    flags[i].Untake();
+                }
+                WriteAllTimeFlags(flags);
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+            return string.Empty;
         }
     }
 }
