@@ -14,6 +14,7 @@ public class GameBehaviour : MonoBehaviour
     const string MAINCONTAINER_NAME = "Main";
     const string SOUNDPLAYER_NAME = "SoundPlayer";
     const float FLIGHT_SPEED = .1f;
+    const float MIN_TAPTIME_GAP = .1f;
 
     bool isManualTimingOn;
     bool isGameOn;
@@ -26,6 +27,11 @@ public class GameBehaviour : MonoBehaviour
     public static GameBehaviour Instance { get; private set; }
 
     private void Awake()
+    {
+        EnsureSingleton();
+    }
+
+    void EnsureSingleton()
     {
         if (Instance != null && Instance != this)
             Destroy(gameObject);
@@ -50,7 +56,7 @@ public class GameBehaviour : MonoBehaviour
             if (Instance.pnlEndgame.gameObject.activeSelf)
                 Instance.pnlEndgame.gameObject.SetActive(false);
 
-        BeatFlagController.ClearProblematicFlagIndexes(0.1f);
+        BeatFlagController.ClearProblematicFlagIndexes(MIN_TAPTIME_GAP);
     }
 
     // Update is called once per frame
