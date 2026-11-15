@@ -74,5 +74,15 @@ namespace Assets.Scripts
             float end = TimePoint + ArmAround;
             return end - start < sensitivity;
         }
+
+        public void Take()
+        {
+            IsTaken = true;
+        }
+
+        public void Untake()
+        {
+            IsTaken = false;
+        }
     }
 }
